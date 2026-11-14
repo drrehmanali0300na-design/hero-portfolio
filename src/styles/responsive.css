@@ -1,0 +1,119 @@
+/* ==========================================================================
+   RESPONSIVE — tablet & mobile adjustments (Bootstrap handles the grid;
+   these rules refine the custom components below the lg breakpoint).
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  .section {
+    padding: 82px 0;
+  }
+
+  .hero {
+    padding: 128px 0 72px;
+    min-height: auto;
+  }
+  .hero-visual {
+    margin: 44px auto 0;
+    max-width: 430px;
+  }
+  .code-card {
+    left: -10px;
+    bottom: 26px;
+    width: 228px;
+  }
+  .chip-top { right: 2px; }
+  .chip-right { right: -10px; }
+  .chip-bottom { right: 14%; }
+
+  /* Mobile navbar: hamburger toggles a dropdown panel */
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    background: #0b0f18;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    padding: 14px 22px 20px;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.45);
+  }
+  .nav-menu.open {
+    display: flex;
+  }
+  .nav-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    width: 100%;
+  }
+  .nav-linkx {
+    padding: 11px 12px;
+    font-size: 1rem;
+  }
+  .nav-linkx.active::after {
+    display: none;
+  }
+  .nav-linkx.active {
+    background: rgba(22, 119, 255, 0.12);
+  }
+  .nav-cta {
+    margin-top: 8px;
+    justify-content: center;
+  }
+
+  .about-visual {
+    margin: 0 auto;
+  }
+  .about-exp-card {
+    right: -8px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .approach-list {
+    grid-template-columns: 1fr;
+  }
+  .contact-form {
+    padding: 24px 20px;
+  }
+  .section-head {
+    margin-bottom: 42px;
+  }
+  .footer-bottom {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero {
+    padding: 118px 0 64px;
+  }
+  .hero-title {
+    font-size: clamp(2.1rem, 9vw, 2.6rem);
+  }
+  .hero-visual {
+    max-width: 340px;
+  }
+  .code-card {
+    display: none; /* keep small screens uncluttered */
+  }
+  .chip-top { top: 14px; right: 6px; }
+  .chip-right { top: auto; bottom: 64px; right: -4px; }
+  .chip-bottom { display: none; }
+  .about-exp-card {
+    right: 6px;
+    bottom: 16px;
+    padding: 11px 14px;
+  }
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+  }
+  .btn-x {
+    padding: 12px 20px;
+  }
+}

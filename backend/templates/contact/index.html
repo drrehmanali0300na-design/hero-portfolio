@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact — Alex Carter (Django backend demo)</title>
+  <style>
+    :root { --bg:#080B12; --card:#0E1420; --border:rgba(255,255,255,.1); --text:#E6EAF2; --muted:#94A3B8; --primary:#1677FF; --primary2:#389BFF; --ok:#34C77B; --err:#F87171; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; display:grid; place-items:center; min-height:100vh; padding:24px; }
+    .card { width:100%; max-width:520px; background:var(--card); border:1px solid var(--border); border-radius:18px; padding:32px; }
+    h1 { font-size:1.5rem; margin:0 0 6px; }
+    p.sub { color:var(--muted); margin:0 0 22px; font-size:.92rem; }
+    label { display:block; font-size:.82rem; font-weight:600; color:#C6D0DE; margin:14px 0 6px; }
+    input, textarea { width:100%; background:#0A0E16; border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text); font:inherit; font-size:.95rem; }
+    input:focus, textarea:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(22,119,255,.18); }
+    button { margin-top:20px; background:var(--primary); color:#fff; border:none; border-radius:10px; padding:13px 22px; font-weight:600; font-size:.95rem; cursor:pointer; }
+    button:hover { background:var(--primary2); }
+    #status { margin-top:14px; font-size:.9rem; display:none; }
+    #status.ok { color:var(--ok); display:block; }
+    #status.err { color:var(--err); display:block; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Send a message</h1>
+    <p class="sub">This page is served by Django and posts to <code>/api/contact/</code>, which stores your message in the database.</p>
+    <form id="contactForm" novalidate>
+      {% csrf_token %}
+      <label for="id_name">Name</label>
+      <input id="id_name" name="name" type="text" maxlength="120" placeholder="Your full name" required>
+      <label for="id_email">Email</label>
+      <input id="id_email" name="email" type="email" maxlength="255" placeholder="you@example.com" required>
+      <label for="id_subject">Subject</label>
+      <input id="id_subject" name="subject" type="text" maxlength="200" placeholder="What is this about?" required>
+      <label for="id_message">Message</label>
+      <textarea id="id_message" name="message" rows="6" maxlength="5000" placeholder="Tell me about your project…" required></textarea>
+      <button type="submit">Send Message</button>
+      <p id="status" role="status"></p>
+    </form>
+  </main>
+  <script>
+    // Progressive enhancement: submit as JSON to the Django API endpoint.
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const status = document.getElementById("status");
+      const csrf = form.querySelector("[name=csrfmiddlewaretoken]").value;
+      const payload = {
+        name: form.name.value,
+        email: form.email.value,
+        subject: form.subject.value,
+        message: form.message.value,
+      };
+      status.className = ""; status.textContent = "Sending…";
+      try {
+        const res = await fetch("/api/contact/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        status.className = data.ok ? "ok" : "err";
+        status.textContent = data.message + (data.errors ? " " + JSON.stringify(data.errors) : "");
+        if (data.ok) form.reset();
+      } catch (err) {
+        status.className = "err";
+        status.textContent = "Network error — please try again.";
+      }
+    });
+  </script>
+</body>
+</html>
