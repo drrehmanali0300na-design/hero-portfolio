@@ -1,4 +1,4 @@
-# Alex Carter — Developer Portfolio
+# Abdul Rehman — Developer Portfolio
 
 A premium, fully responsive **Black + Electric Blue** personal portfolio for a
 Full-Stack Web Developer, built as a production **Next.js (App Router)** app with a
