@@ -12,7 +12,7 @@ export const PROFILE = {
   lastName: "Rehman",
   role: "Full-Stack Web Developer",
   email: "drrehmanali0300na@gmail.com",
-  location: "Remote · Worldwide",
+  location: "Faisalabad, Pakistan",
   availability: "Available for Opportunities",
   heroHeading: "Building Digital Experiences That Matter.",
   heroIntro:
